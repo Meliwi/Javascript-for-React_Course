@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates Literals - expresiones</title>
+</head>
+<body>
+    <!--Hacemos un bloque de código Javascript con script-->
+    <script>
+        const nombre = 'Melissa'
+        console.log(`Mi nombre es ${nombre}`)
+        //un valor también es una expresion 
+        console.log(`Tengo ${20} años`)
+        //De igual manera, un string también es una expresión, al igual que 
+        // un booleano,un objeto etc
+        console.log(`Este es el ${'Curso de Javascript para React'}`)
+        //Lo que hace el navegador es poner a x en window, es decir que window.x contiene este string 
+        console.log(`Mi nombre es ${x = 'Melissa'}`)
+        //esto me devuelve toda la declaración de la función
+        console.log(`Mi nombre es ${function name(){return 'Meli'}}`)
+        //Podemos autoejecutar la función para que retorne lo que queremos que devuelva
+        console.log(`Mi nombre es ${(function name(){return 'Meli'})()}`)
+        console.log(`Mi nombre es ${(function (){return 'Meliwi'})()}`)
+        //Ahora, con un arrow function también funciona
+        console.log(`Mi nombre es ${(() => {return 'Meli con Arrow function'})()}`)
+        //Con condicionales no sirve, ya que esto es una estructura de control y no una expresión 
+        //console.log(`Mi nombre es ${ if(true) {console.log('Meli G')} {console.log('error')}()}`)
+        //Aunque se puede usar un ternario, de la siguiente manera:
+        console.log(`Mi nombre es ${true && 'Meli ternario'}`)
+        console.log(`Mi nombre es ${false ? 'Meli true':'Meli false'}`)
+        //Otra aplicación puede ser con arrays y mapear cada uno de sus elementos.
+        console.log(`Mi nombre es ${['a','b'].map(letra => `${letra}-styled`)}`)
+    </script>
+</body>
+</html>
