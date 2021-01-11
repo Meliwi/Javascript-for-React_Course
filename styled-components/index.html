@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Components</title>
+</head>
+<body>
+    <div id="container"> </div>
+    <!--Vamos a realizar una versión mínima de la librería styled components con los que hemos
+    aprendido hasta el momento-->
+    <script>
+        //Aquí hacemos uso de los tagged templates para crear una funcion component
+        function component(strings,...values){
+            return function(props){
+                //Hacemos una copia identica de los strings que guardo en newContent usando slice
+                let newContent = strings.slice()
+                values.forEach((value, index) => {
+                newContent[index]  += props[value]
+            })
+            return newContent.join('')
+          }
+        }
+
+        //arreglo con algunas etiquetas de html, podriamos ponerlas todas si quisieramos 
+        const tags = ['h1','h2','h3','section','nav','p','div']
+
+        /*Recibe el arreglo con las etiquetas, y lo que hace es que a cada tag que entra lo convierte 
+        en una función que recibe estilos y retorna una función que recibe un contenido y retorna 
+        el contenido aplicando la etiqueta correspondiente y los estilos asignados por el programador
+        */
+        const StyledTags = (tags) => {
+            let newContent = {}
+            tags.forEach((tag) => {
+                newContent[tag] = function(styles){
+                    return function(content){
+                        return `
+                            <${tag} style="${styles}">
+                                ${content}
+                            </${tag}>`
+                        }
+                    }
+                })
+            return newContent
+        }
+        //Guardamos lo que retorna la función en styled
+        const styled = StyledTags(tags)    
+        console.log(styled)
+
+        // const styled = {
+            /*h1 es una función que retorna una función que retorna un contenido h1 con el estilo que se
+             le asigne*/
+            /*h1: function(styles){
+                return function(content){
+                return `
+                    <h1 style="${styles}">
+                        ${content}
+                    </h1>`
+                }
+            },
+            h2: '',
+            div: '',
+        }*/
+        const TitleStyled = styled.h1`
+            color: orange;
+            font-family: system-ui;
+            font-size: 50px;
+            text-shadow: 2px 2px 0 black;
+            line-height: 100vh
+        `
+
+        const props = {
+            message : 'No te rindas',
+        }
+        const Title = component`<marquee> ${'message'} </marquee>`(props)
+        //creamos la función render que se encarga de modificar el html 
+        function render(component, container){
+            container.innerHTML = component
+        }
+        render(TitleStyled(Title),window.container)
+    </script>
+</body>
+</html>
