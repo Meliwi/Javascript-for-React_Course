@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShortHand Property Names</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <main>
+    <h1>
+      La mejor. <br>
+      Para los mejores
+    </h1>
+        <div class="hero">
+            <div class="wrapper">
+                <div class="hero-content">
+                <div class="mac"></div>
+                <div class="app">
+                    <p>
+                    <strong>
+                        Precio:
+                    </strong>
+                    <span id="price">-</span>
+                    </p>
+                    <p>
+                    <strong>
+                        Precio oferta:
+                    </strong>
+                    <span id="offer">-</span>
+                    </p>
+                    <p>
+                    <strong>
+                        Precio Final:
+                    </strong>
+                    <span id="final-price">-</span>
+                    </p>
+                    <button class="button" id="make-offer">Regatear</button>
+                </div>
+                </div>
+                </div>
+            </div>
+    </main>
+    <!--Esta es la parte en la que trabajamos, el resto ya lo realizó previamente Leonidas-->
+    <script>
+        //De esta manera se crea un objeto con shorthand property names 
+        const price = 2700
+        const macbook = {
+            price,
+            get finalPrice(){
+                return this.price * 1.16
+            },
+
+            set offer(offer){
+                //Esta función recibe el valor de la oferta y se lo resta al precio, 
+                //entonces se tiene un nuevo valor de price
+                this.price -= offer
+            },
+            /*
+            Sin shorthand property names podemos crear una función así:
+            getPrice: function(){}
+            Pero haciendo uso de SPN se realiza de la siguiente manera:*/
+            getPrice(){
+                console.log(this.price)
+            },
+            //Vamos a crear un generador
+            *discount(offer){
+                let price = this.finalPrice
+                //bucle infinito dentro del generador
+                while(true){
+                    yield price -= offer
+                }
+            }
+        }
+        window.price.textContent = macbook.price
+        macbook.offer = 500
+        window.offer.textContent = macbook.price
+        //No es necesario llamar a finalPrice como función, esta es una particularidad de get
+        window['final-price'].textContent = macbook.finalPrice
+
+        //Hacemos uso del generador creado 
+        const makeAnOffer = macbook.discount(15)
+        window['make-offer'].addEventListener('click',() => {
+            console.log(makeAnOffer.next())
+            window['final-price'].textContent = makeAnOffer.next().value
+        })
+        /*Una forma para que se realice el descuento una sola vez al evento se le puede pasar
+        un tercer parámetro para que este reaccione una vez $element.addEventListener('click', function(){}, {once: true})
+        */
+    </script>
+</body>
+</html>
