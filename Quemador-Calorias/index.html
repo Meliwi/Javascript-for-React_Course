@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Quemador de calorías</title>
+</head>
+<body>
+    <main>
+        <div class="wrapper">
+          <details>
+            <summary>
+              ⭐️ explicación
+            </summary>
+            <p>El libro, Convert Anything to Calories, llegó a la conclusión de que, en promedio, una persona con un dedo
+              indice
+              de
+              10.8 cm^3 y de 11.7 gramos necesitará muuuchos clicks para conservar la línea. Se requieren 16.7 micromoles de
+              adenosín
+              trifosfato (la molécula que transporta energía entre las células) para mover un gramo del cuerpo por un
+              segundo,
+              y
+              como
+              hay 7.3 calorías en un mol (la medida de cantidad de una sustancia) de adenosín trifosfato, en teoría, cada
+              click
+              del
+              mouse debería quemar 1.42 calorías. Aunque el cálculo asume el movimiento de todo el músculo, por lo que la
+              cantidad
+              real puede variar un poco.</p>
+            <p>Pero resulta que es sábado y tienes hambre. treinta minutos después te llega una pizza (1,835kCal) con una
+              coca
+              (97kCal), tendrías que hacer 1,360,563 clicks para quemar la cena. Y cómo es sábado seguramente involucrará
+              unas cuantas
+              bebidas alcohólicas: en un Gin & Tonic (120kCal) hay 84,507 clicks, y 131,690.14 por cada cerveza que
+              consumas. En otras
+              palabras, con 427 clicks en promedio por día, la computadora no es un buen ejercicio.
+            </p>
+          </details>
+          <h1>Quemador de calorías</h1>
+          <p class="result" id="result"></p>
+          <button id="burn" class="burn">🔥</button>
+        </div>
+      </main>
+      <script>
+        //creamos la función createStore la cual recibe a reducer y al estado inicial 
+        const createStore = (reducer, initialState) => {
+            //creamos una variable donde se guarda el estado inicial actual 
+            let state = initialState
+            
+            //función vacía 
+            let updater = () => {}
+             //Esta función me devuelve el estado actual  
+            const getState = () => state
+
+            //Esta función es con la que se invocan cambios en el estado
+            const dispatch = (action) => {
+               state = reducer(state,action)
+               updater()
+            }
+
+            /*Esta función se ejecuta cada vez que ocurre algún cambio. Recibe 
+            una función que se almacena en la función vacia updater definida 
+            anteriormente 
+            */
+            const subscribe = (listener) => {
+                updater = listener
+            }
+             return {
+                getState,
+                dispatch,
+                subscribe
+            }
+        }
+
+        //reducer es una función que evalúa los comportamientos de mis acciones
+        const reducer = (state, action) => {
+            return action 
+        }
+        //store almacena a lo que devuelve la función createStore  
+        const store = createStore(reducer,'estado inicial de la aplicación')
+
+        store.subscribe(() => {
+            console.log('Ha cambiado algo en el store', store.getState())
+        })
+
+        store.dispatch('voy a cambiar algo')
+      </script>
+</body>
+</html>
