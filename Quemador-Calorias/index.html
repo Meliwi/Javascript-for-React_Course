@@ -43,7 +43,7 @@
         </div>
       </main>
       <script>
-        //creamos la función createStore la cual recibe a reducer y al estado inicial 
+        //creamos la función createStore, es la base de redux, la cual recibe a reducer y al estado inicial 
         const createStore = (reducer, initialState) => {
             //creamos una variable donde se guarda el estado inicial actual 
             let state = initialState
@@ -73,18 +73,38 @@
             }
         }
 
-        //reducer es una función que evalúa los comportamientos de mis acciones
+        /*reducer es una función que evalúa los comportamientos de mis acciones, es decir
+        que las acciones describen algo que pasó, y los reducers se encargan de especificar como 
+        cambió el estado de la aplicación 
+        */
         const reducer = (state, action) => {
-            return action 
+          switch(action.type){
+            case 'BURN':
+              return state + 1.42
+            default:
+              return state
+          }
         }
         //store almacena a lo que devuelve la función createStore  
-        const store = createStore(reducer,'estado inicial de la aplicación')
+        //El estado inicial será un número cero (recordar que esto puede ser cualquier cosa)
+        const store = createStore(reducer,0)
 
         store.subscribe(() => {
-            console.log('Ha cambiado algo en el store', store.getState())
+            //Con esta línea ya podemos mostrarlo en pantalla 
+            window.result.textContent = `Has quemado ${store.getState()} calorías`
         })
 
-        store.dispatch('voy a cambiar algo')
+        /*Para que quede más claro, las acciones son un bloque de información que envia
+        datos desde tu aplicación a tu store, estas acciones son la unica fuente de 
+        información para el store y se envian usando store.dispatch() en react*/
+        const burn = () =>{
+          store.dispatch({
+            type: 'BURN',
+            payload: 1.42,
+          })
+        }
+        //Detectar un click, entonces se añade un evento 
+        window.burn.addEventListener('click', burn)
       </script>
 </body>
 </html>
